@@ -7,10 +7,10 @@ export default function NotFound() {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-[#121212] px-4">
       <div className="text-center space-y-6">
         <h1 className="font-sans text-4xl font-semibold text-[#e5e5e5]">
-          Sector Not Found
+          Gebiet nicht gefunden
         </h1>
         <p className="font-sans text-sm text-[#a3a3a3]">
-          This sector does not exist or is no longer active.
+          Dieses Gebiet existiert nicht oder ist nicht mehr aktiv.
         </p>
         <Button
           variant="ghost"
@@ -19,7 +19,7 @@ export default function NotFound() {
         >
           <Link href="/sectors">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Map
+            Zurück zur Karte
           </Link>
         </Button>
       </div>

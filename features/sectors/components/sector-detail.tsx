@@ -41,7 +41,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
           <div className="font-sans text-3xl font-semibold text-[#4a6f4a]">
             €{sector.pricePerNight}
           </div>
-          <div className="font-sans text-xs text-[#666666]">Per Night</div>
+          <div className="font-sans text-xs text-[#666666]">Pro Nacht</div>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
               <Mountain className="h-4 w-4 text-amber-500" />
-              <span className="font-mono text-xs">Wilderness</span>
+              <span className="font-mono text-xs">Wildnis</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
               Level {sector.wildernessLevel}
@@ -64,7 +64,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
               <Flame className="h-4 w-4 text-red-400" />
-              <span className="font-sans text-xs">Fire</span>
+              <span className="font-sans text-xs">Feuer</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
               {FIRE_LABELS[sector.firePermission]}
@@ -80,7 +80,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
                   ? "text-[#4a6f4a]" 
                   : "text-cyan-400"
               }`} />
-              <span className="font-sans text-xs">Water</span>
+              <span className="font-sans text-xs">Wasser</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
               {WATER_LABELS[sector.waterAvailability]}
@@ -90,10 +90,10 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
               <Users className="h-4 w-4 text-purple-400" />
-              <span className="font-sans text-xs">Capacity</span>
+              <span className="font-sans text-xs">Kapazität</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
-              {sector.maxOperators} {sector.maxOperators === 1 ? "Person" : "People"}
+              {sector.maxOperators} {sector.maxOperators === 1 ? "Person" : "Personen"}
             </div>
           </div>
         </div>
@@ -103,13 +103,13 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
       <div className="space-y-3">
         <Badge variant="outline" className="border-[#4a6f4a]/30 bg-[#4a6f4a]/5 text-[#e5e5e5]">
           <WifiOff className="mr-2 h-3 w-3" />
-          <span className="font-sans text-xs">Zero Infrastructure</span>
+          <span className="font-sans text-xs">Keine Infrastruktur</span>
         </Badge>
 
         {sector.byotMandatory && (
           <Badge variant="outline" className="border-[#4a6f4a]/30 bg-[#4a6f4a]/5 text-[#e5e5e5]">
             <AlertTriangle className="mr-2 h-3 w-3" />
-            <span className="font-sans text-xs">BYOT Mandatory - No Toilet Provided</span>
+            <span className="font-sans text-xs">BYOT Pflicht - Keine Toilette vorhanden</span>
           </Badge>
         )}
       </div>
@@ -121,7 +121,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
           className="w-full bg-[#2d4a2d] py-6 font-sans text-sm hover:bg-[#3d5a3d] lg:hidden"
           disabled={!sector.isActive}
         >
-          {sector.isActive ? TACTICAL_COPY.BOOK_NOW : "Sector Offline"}
+          {sector.isActive ? TACTICAL_COPY.BOOK_NOW : "Gebiet offline"}
         </Button>
       )}
     </div>

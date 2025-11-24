@@ -18,9 +18,9 @@ import {
 import { supabase } from "@/lib/supabase/client";
 
 const registerSchema = z.object({
-  email: z.string().email("Invalid email format"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  displayName: z.string().min(2, "Display name must be at least 2 characters"),
+  email: z.string().email("Ungültiges E-Mail-Format"),
+  password: z.string().min(8, "Passwort muss mindestens 8 Zeichen lang sein"),
+  displayName: z.string().min(2, "Anzeigename muss mindestens 2 Zeichen lang sein"),
   role: z.enum(["OPERATOR", "LANDOWNER", "BOTH"]).default("OPERATOR"),
 });
 
@@ -61,7 +61,7 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
       }
 
       if (!authData.user) {
-        setError("Registration failed");
+        setError("Registrierung fehlgeschlagen");
         return;
       }
 
@@ -81,7 +81,7 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
       router.push(redirectTo || "/command");
       router.refresh();
     } catch (err) {
-      setError("An unexpected error occurred");
+      setError("Ein unerwarteter Fehler ist aufgetreten");
     } finally {
       setIsLoading(false);
     }
@@ -96,13 +96,13 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-sans text-xs text-[#a3a3a3]">
-                Display Name
+                Anzeigename
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="text"
-                  placeholder="Operator Name"
+                  placeholder="Operator-Name"
                   className="border-[#262626] bg-[#171717] font-sans text-sm"
                 />
               </FormControl>
@@ -117,7 +117,7 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-sans text-xs text-[#a3a3a3]">
-                Email
+                E-Mail
               </FormLabel>
               <FormControl>
                 <Input
@@ -138,7 +138,7 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-sans text-xs text-[#a3a3a3]">
-                Password
+                Passwort
               </FormLabel>
               <FormControl>
                 <Input
@@ -164,7 +164,7 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
           disabled={isLoading}
           className="w-full bg-[#2d4a2d] font-sans text-xs hover:bg-[#3d5a3d]"
         >
-          {isLoading ? "Processing..." : "Register Operator"}
+          {isLoading ? "Wird verarbeitet..." : "Operator registrieren"}
         </Button>
       </form>
     </Form>

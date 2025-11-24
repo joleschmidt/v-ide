@@ -18,10 +18,10 @@ export const SectorLocationCard = ({ sector }: SectorLocationCardProps) => {
           </div>
           <div className="flex-1 space-y-1">
             <h3 className="font-sans text-sm font-semibold text-[#e5e5e5]">
-              Location Privacy
+              Standortschutz
             </h3>
             <p className="font-sans text-xs text-[#a3a3a3] leading-relaxed">
-              Exact GPS coordinates are protected until booking confirmation.
+              Exakte GPS-Koordinaten sind bis zur Buchungsbestätigung geschützt.
             </p>
           </div>
         </div>
@@ -31,7 +31,7 @@ export const SectorLocationCard = ({ sector }: SectorLocationCardProps) => {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Shield className="h-3 w-3 text-[#666666]" />
-              <span className="font-sans text-xs text-[#666666]">Approximate Zone</span>
+              <span className="font-sans text-xs text-[#666666]">Ungefähre Zone</span>
             </div>
             <div className="font-mono text-sm text-[#e5e5e5]">
               {sector.fuzzyLocation.center.lat.toFixed(4)}°N,{" "}
@@ -48,10 +48,10 @@ export const SectorLocationCard = ({ sector }: SectorLocationCardProps) => {
           <Lock className="h-4 w-4 flex-shrink-0 text-[#4a6f4a] mt-0.5" />
           <div className="space-y-1">
             <p className="font-sans text-xs font-semibold text-[#4a6f4a]">
-              Exact Coordinates Locked
+              Exakte Koordinaten gesperrt
             </p>
             <p className="font-sans text-xs text-[#a3a3a3]">
-              Revealed after payment confirmation to protect landowner privacy.
+              Werden nach Zahlungsbestätigung freigegeben, um die Privatsphäre des Grundbesitzers zu schützen.
             </p>
           </div>
         </div>

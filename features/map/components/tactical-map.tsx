@@ -1,11 +1,15 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { GoogleMap, useJsApiLoader, Marker, Circle } from "@react-google-maps/api";
 import type { SectorPreview } from "@/types/sector";
 import { MAP_CONFIG } from "@/lib/constants";
 import { SectorPreviewCard } from "./sector-preview-card";
+import { MapFilters } from "./map-filters";
+import { MapModeSelector } from "./map-mode-selector";
+import { useMapState } from "../hooks/use-map-state";
+import { getMarkerIcon, getCircleOptions } from "../utils/markers";
 
 interface TacticalMapProps {
   sectors: SectorPreview[];
@@ -70,6 +74,7 @@ const darkMapStyles = [
 
 export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
   const router = useRouter();
+  const { filters, mapType } = useMapState();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
@@ -78,6 +83,64 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [hoveredSector, setHoveredSector] = useState<SectorPreview | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Filter sectors based on active filters
+  const filteredSectors = useMemo(() => {
+    return sectors.filter((sector) => {
+      // Wilderness level filter
+      if (filters.wildernessLevel && filters.wildernessLevel.length > 0) {
+        if (!filters.wildernessLevel.includes(sector.wildernessLevel)) {
+          return false;
+        }
+      }
+
+      // Fire permission filter
+      if (filters.firePermission && filters.firePermission.length > 0) {
+        if (!filters.firePermission.includes(sector.firePermission)) {
+          return false;
+        }
+      }
+
+      // Water availability filter
+      if (filters.waterAvailability && filters.waterAvailability.length > 0) {
+        if (!filters.waterAvailability.includes(sector.waterAvailability)) {
+          return false;
+        }
+      }
+
+      // Price range filter
+      if (filters.priceRange) {
+        const [minPrice, maxPrice] = filters.priceRange;
+        if (sector.pricePerNight < minPrice || sector.pricePerNight > maxPrice) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [sectors, filters]);
+
+  // Update map type when it changes
+  useEffect(() => {
+    if (map) {
+      let mapTypeId: google.maps.MapTypeId;
+      if (mapType === "dark") {
+        mapTypeId = google.maps.MapTypeId.ROADMAP;
+      } else if (mapType === "hybrid") {
+        mapTypeId = google.maps.MapTypeId.HYBRID;
+      } else {
+        mapTypeId = mapType as google.maps.MapTypeId;
+      }
+      map.setMapTypeId(mapTypeId);
+
+      // Apply dark styles only for dark mode
+      if (mapType === "dark") {
+        map.setOptions({ styles: darkMapStyles });
+      } else {
+        map.setOptions({ styles: [] });
+      }
+    }
+  }, [map, mapType]);
 
   const onLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
@@ -89,10 +152,10 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
 
   const handleMarkerMouseOver = (sector: SectorPreview, event: google.maps.MapMouseEvent) => {
     setHoveredSector(sector);
-    if (event.domEvent) {
-      setMousePosition({ 
-        x: event.domEvent.clientX, 
-        y: event.domEvent.clientY 
+    if (event.domEvent && 'clientX' in event.domEvent && 'clientY' in event.domEvent) {
+      setMousePosition({
+        x: (event.domEvent as MouseEvent).clientX,
+        y: (event.domEvent as MouseEvent).clientY
       });
     }
   };
@@ -120,15 +183,15 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
   }
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full" style={{ height: '100%', width: '100%' }}>
       <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "100%" }}
+        mapContainerStyle={{ width: "100%", height: "100%", minHeight: '100%' }}
         center={MAP_CONFIG.DEFAULT_CENTER}
         zoom={MAP_CONFIG.DEFAULT_ZOOM}
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={{
-          styles: darkMapStyles,
+          styles: mapType === "dark" ? darkMapStyles : [],
           disableDefaultUI: true,
           zoomControl: true,
           mapTypeControl: false,
@@ -139,9 +202,14 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
           minZoom: MAP_CONFIG.MIN_ZOOM,
           maxZoom: MAP_CONFIG.MAX_ZOOM,
           gestureHandling: "greedy",
+          mapTypeId: mapType === "dark"
+            ? google.maps.MapTypeId.ROADMAP
+            : mapType === "hybrid"
+              ? google.maps.MapTypeId.HYBRID
+              : mapType as google.maps.MapTypeId,
         }}
       >
-        {sectors.map((sector) => (
+        {filteredSectors.map((sector) => (
           <div key={sector.id}>
             {/* Fuzzy Location Circle */}
             <Circle
@@ -150,29 +218,16 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
                 lng: sector.fuzzyLocation.center.lng,
               }}
               radius={sector.fuzzyLocation.radiusKm * 1000}
-              options={{
-                fillColor: "#4a7a4a",
-                fillOpacity: 0.1,
-                strokeColor: "#4a7a4a",
-                strokeOpacity: 0.3,
-                strokeWeight: 1,
-              }}
+              options={getCircleOptions(sector)}
             />
-            
+
             {/* Tactical Marker */}
             <Marker
               position={{
                 lat: sector.fuzzyLocation.center.lat,
                 lng: sector.fuzzyLocation.center.lng,
               }}
-              icon={{
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: "#4a7a4a",
-                fillOpacity: 1,
-                strokeColor: "#5a8a5a",
-                strokeWeight: 2,
-                scale: 8,
-              }}
+              icon={getMarkerIcon(sector)}
               onMouseOver={(e) => handleMarkerMouseOver(sector, e)}
               onMouseOut={handleMarkerMouseOut}
               onClick={() => handleMarkerClick(sector.id)}
@@ -180,6 +235,12 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
           </div>
         ))}
       </GoogleMap>
+
+      {/* Filter Panel */}
+      <MapFilters />
+
+      {/* Map Mode Selector */}
+      <MapModeSelector />
 
       {/* Hover Preview Card */}
       {hoveredSector && (

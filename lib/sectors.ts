@@ -47,6 +47,7 @@ export function transformSectorPreview(row: SectorRow): SectorPreview {
     name: row.name,
     wildernessLevel: row.wilderness_level as SectorPreview["wildernessLevel"],
     firePermission: row.fire_permission,
+    waterAvailability: row.water_availability,
     pricePerNight: Number(row.price_per_night),
     imageUrl: row.images?.[0] || "/placeholder.jpg",
     fuzzyLocation: {

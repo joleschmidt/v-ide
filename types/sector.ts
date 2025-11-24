@@ -61,6 +61,7 @@ export interface SectorPreview {
   name: string;
   wildernessLevel: WildernessLevel;
   firePermission: FirePermission;
+  waterAvailability: WaterAvailability;
   pricePerNight: number;
   imageUrl: string;
   fuzzyLocation: FuzzyLocation;

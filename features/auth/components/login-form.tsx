@@ -19,8 +19,8 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email format"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.string().email("Ungültiges E-Mail-Format"),
+  password: z.string().min(8, "Passwort muss mindestens 8 Zeichen lang sein"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -59,7 +59,7 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
       router.push(redirectTo || "/command");
       router.refresh();
     } catch (err) {
-      setError("An unexpected error occurred");
+      setError("Ein unerwarteter Fehler ist aufgetreten");
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +74,7 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-mono text-xs text-[#a8a8a8]">
-                Email
+                E-Mail
               </FormLabel>
               <FormControl>
                 <Input
@@ -95,7 +95,7 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-mono text-xs text-[#a8a8a8]">
-                Password
+                Passwort
               </FormLabel>
               <FormControl>
                 <Input
@@ -121,7 +121,7 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
           disabled={isLoading}
           className="w-full bg-[#2d4a2d] font-sans text-xs hover:bg-[#3d5a3d]"
         >
-          {isLoading ? "Processing..." : TACTICAL_COPY.LOGIN}
+          {isLoading ? "Wird verarbeitet..." : TACTICAL_COPY.LOGIN}
         </Button>
       </form>
     </Form>

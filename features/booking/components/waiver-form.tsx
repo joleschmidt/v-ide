@@ -18,13 +18,13 @@ import { AlertCircle } from "lucide-react";
 
 const waiverSchema = z.object({
   liabilityAccepted: z.boolean().refine((val) => val === true, {
-    message: "You must accept liability terms",
+    message: "Du musst die Haftungsbedingungen akzeptieren",
   }),
   leaveNoTraceAccepted: z.boolean().refine((val) => val === true, {
-    message: "You must accept Leave No Trace principles",
+    message: "Du musst die Leave No Trace Prinzipien akzeptieren",
   }),
   byotAccepted: z.boolean().refine((val) => val === true, {
-    message: "You must confirm BYOT compliance",
+    message: "Du musst die BYOT-Compliance bestätigen",
   }),
 });
 
@@ -64,12 +64,12 @@ export const WaiverForm = ({ byotRequired, onSubmit }: WaiverFormProps) => {
           <AlertCircle className="h-5 w-5 text-[#4a7a4a] flex-shrink-0 mt-0.5" />
           <div className="space-y-2">
             <h3 className="font-mono text-sm font-semibold text-[#e2e8f0]">
-              Legal Agreement Required
+              Rechtliche Vereinbarung erforderlich
             </h3>
             <p className="text-xs text-[#a8a8a8] leading-relaxed">
-              This platform facilitates a <strong className="text-[#e2e8f0]">Gestattungsvertrag</strong>{" "}
-              (Permission Agreement) between you and the landowner. You enter the property{" "}
-              <strong className="text-[#e2e8f0]">at your own risk</strong> ("Betreten auf eigene Gefahr").
+              Diese Plattform vermittelt einen <strong className="text-[#e2e8f0]">Gestattungsvertrag</strong>{" "}
+              zwischen dir und dem Grundbesitzer. Du betrittst das Grundstück{" "}
+              <strong className="text-[#e2e8f0]">auf eigene Gefahr</strong> ("Betreten auf eigene Gefahr").
             </p>
           </div>
         </div>
@@ -93,11 +93,11 @@ export const WaiverForm = ({ byotRequired, onSubmit }: WaiverFormProps) => {
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel className="text-sm font-mono text-[#e2e8f0]">
-                    Strict Liability Acceptance
+                    Haftungsausschluss akzeptieren
                   </FormLabel>
                   <p className="text-xs text-[#a8a8a8]">
-                    I accept full responsibility for my safety. I waive all claims against the
-                    landowner for injuries, loss, or damage occurring on the property.
+                    Ich übernehme die volle Verantwortung für meine Sicherheit. Ich verzichte auf alle Ansprüche gegen den
+                    Grundbesitzer für Verletzungen, Verluste oder Schäden, die auf dem Grundstück auftreten.
                   </p>
                   <FormMessage />
                 </div>
@@ -123,8 +123,8 @@ export const WaiverForm = ({ byotRequired, onSubmit }: WaiverFormProps) => {
                     Leave No Trace Compliance
                   </FormLabel>
                   <p className="text-xs text-[#a8a8a8]">
-                    I will adhere to Leave No Trace principles. I will remove all waste and leave
-                    the site in its natural state.
+                    Ich werde mich an die Leave No Trace Prinzipien halten. Ich werde allen Müll entfernen und den
+                    Ort in seinem natürlichen Zustand belassen.
                   </p>
                   <FormMessage />
                 </div>
@@ -148,11 +148,11 @@ export const WaiverForm = ({ byotRequired, onSubmit }: WaiverFormProps) => {
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel className="text-sm font-mono text-[#e2e8f0]">
-                      BYOT (Bring Your Own Toilet) Mandatory
+                      BYOT (Bring Your Own Toilet) Pflicht
                     </FormLabel>
                     <p className="text-xs text-[#a8a8a8]">
-                      This sector has no sanitary facilities. I confirm I carry a portable sanitary
-                      solution and will dispose of waste properly.
+                      Dieses Gebiet hat keine sanitären Einrichtungen. Ich bestätige, dass ich eine tragbare sanitäre
+                      Lösung mitführe und Abfälle ordnungsgemäß entsorgen werde.
                     </p>
                     <FormMessage />
                   </div>
@@ -166,7 +166,7 @@ export const WaiverForm = ({ byotRequired, onSubmit }: WaiverFormProps) => {
             disabled={isSubmitting}
             className="w-full bg-[#4a7a4a] font-mono text-sm hover:bg-[#5a8a5a]"
           >
-            {isSubmitting ? "Processing..." : "Accept Terms & Continue"}
+            {isSubmitting ? "Wird verarbeitet..." : "Bedingungen akzeptieren & fortfahren"}
           </Button>
         </form>
       </Form>

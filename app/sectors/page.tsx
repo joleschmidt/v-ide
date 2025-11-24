@@ -1,10 +1,11 @@
 import { TacticalMap } from "@/features/map/components/tactical-map";
-import { TACTICAL_COPY } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { transformSectorPreview } from "@/lib/sectors";
+import type { SectorPreview } from "@/types/sector";
+import { MapWrapper } from "./map-wrapper";
 
 export default async function SectorsPage() {
-  let sectors = [];
+  let sectors: SectorPreview[] = [];
 
   // Fetch sectors from Supabase
   try {
@@ -23,19 +24,13 @@ export default async function SectorsPage() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      {/* Header */}
-      <header className="border-b border-[#2a2a2a] bg-[#1a1a1a] px-6 py-4">
-        <h1 className="font-mono text-sm font-semibold text-[#e2e8f0]">
-          {TACTICAL_COPY.MAP_TITLE}
-        </h1>
-      </header>
-
-      {/* Map */}
-      <main className="flex-1">
-        <TacticalMap sectors={sectors} />
-      </main>
-    </div>
+    <MapWrapper>
+      <div className="fixed inset-0 top-16" style={{ height: 'calc(100vh - 4rem)', maxHeight: 'calc(100vh - 4rem)', width: '100vw' }}>
+        <div className="relative h-full w-full overflow-hidden">
+          <TacticalMap sectors={sectors} />
+        </div>
+      </div>
+    </MapWrapper>
   );
 }
 

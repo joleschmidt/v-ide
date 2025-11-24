@@ -34,7 +34,7 @@ export function Navbar() {
                 }`}
             >
               <Map className="mr-2 inline h-4 w-4" />
-              Sector Search
+              Gebietssuche
             </Link>
           </div>
         </div>
@@ -53,7 +53,7 @@ export function Navbar() {
                   className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
                 >
                   <Link href="/command">
-                    Command Center
+                    Kommandostelle
                   </Link>
                 </Button>
               ) : null}
@@ -87,7 +87,7 @@ export function Navbar() {
               >
                 <Link href="/register">
                   <User className="mr-2 h-4 w-4" />
-                  Register
+                  Registrieren
                 </Link>
               </Button>
             </>

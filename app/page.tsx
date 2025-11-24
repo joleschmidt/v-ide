@@ -41,6 +41,7 @@ export default async function Home() {
     <main className="min-h-screen bg-[#0a0a0a]">
       <HeroSection />
 
+      <FeaturesGrid />
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-2xl font-bold tracking-wide text-[#e5e5e5] mb-8 border-l-2 border-[#3d5a3d] pl-4">
           Verfügbare Gebiete
@@ -96,10 +97,8 @@ export default async function Home() {
           )}
         </div>
       </section>
-
-      <FeaturesGrid />
-      <HowItWorks />
       <Statistics />
+      <HowItWorks />
       <Footer />
     </main>
   )

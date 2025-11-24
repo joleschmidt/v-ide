@@ -18,10 +18,10 @@ export default async function RegisterPage() {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <h1 className="font-sans text-3xl font-semibold text-[#e5e5e5]">
-            Register Operator
+            Operator registrieren
           </h1>
           <p className="mt-2 font-sans text-sm text-[#a3a3a3]">
-            Create your account to access sectors
+            Erstelle dein Konto, um auf Gebiete zuzugreifen
           </p>
         </div>
 
@@ -31,12 +31,12 @@ export default async function RegisterPage() {
 
         <div className="text-center">
           <p className="font-sans text-sm text-[#a3a3a3]">
-            Already have an account?{" "}
+            Bereits ein Konto?{" "}
             <Link
               href="/login"
               className="font-sans text-sm text-[#4a6f4a] hover:text-[#5a8a5a]"
             >
-              Access System
+              Systemzugang
             </Link>
           </p>
         </div>
