@@ -17,7 +17,7 @@ export function HeroSection() {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
           <h1 className="text-6xl md:text-8xl font-bold tracking-wide text-[#e5e5e5] leading-tight text-balance">
-            Betritt die V<span className="inline-block">Ø</span>IDE.
+            Betritt die VØIDE.
           </h1>
 
           <p className="text-xl md:text-2xl tracking-wide text-[#a3a3a3] font-light">

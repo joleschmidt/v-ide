@@ -1,47 +1,27 @@
 import { TacticalMap } from "@/features/map/components/tactical-map";
 import { TACTICAL_COPY } from "@/lib/constants";
+import { createClient } from "@/lib/supabase/server";
+import { transformSectorPreview } from "@/lib/sectors";
 
-// Mock data - will be replaced with Supabase fetch
-const mockSectors = [
-  {
-    id: "1",
-    name: "Sektor Alpha",
-    wildernessLevel: 4 as const,
-    firePermission: "FIRE_BOWL" as const,
-    pricePerNight: 25,
-    imageUrl: "/dark-dense-forest-wilderness-tactical.jpg",
-    fuzzyLocation: {
-      center: { lat: 51.5, lng: 10.5 },
-      radiusKm: 2,
-    },
-  },
-  {
-    id: "2",
-    name: "Sektor Bravo",
-    wildernessLevel: 5 as const,
-    firePermission: "OPEN_FIRE" as const,
-    pricePerNight: 35,
-    imageUrl: "/pine-forest-clearing-mountains-tactical.jpg",
-    fuzzyLocation: {
-      center: { lat: 50.8, lng: 11.2 },
-      radiusKm: 2,
-    },
-  },
-  {
-    id: "3",
-    name: "Sektor Charlie",
-    wildernessLevel: 3 as const,
-    firePermission: "GAS_ONLY" as const,
-    pricePerNight: 20,
-    imageUrl: "/remote-wilderness-canyon-survival-tactical.jpg",
-    fuzzyLocation: {
-      center: { lat: 51.2, lng: 9.8 },
-      radiusKm: 2,
-    },
-  },
-];
+export default async function SectorsPage() {
+  let sectors = [];
 
-export default function SectorsPage() {
+  // Fetch sectors from Supabase
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("sectors")
+      .select("*")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false });
+
+    if (!error && data) {
+      sectors = data.map((row) => transformSectorPreview(row));
+    }
+  } catch (err) {
+    console.warn("Failed to fetch sectors from Supabase:", err);
+  }
+
   return (
     <div className="flex h-screen flex-col">
       {/* Header */}
@@ -53,7 +33,7 @@ export default function SectorsPage() {
 
       {/* Map */}
       <main className="flex-1">
-        <TacticalMap sectors={mockSectors} />
+        <TacticalMap sectors={sectors} />
       </main>
     </div>
   );

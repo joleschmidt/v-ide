@@ -13,7 +13,8 @@ You are an expert Senior Full Stack Web Developer.
 - **Styling**: Tailwind CSS (Utility-first).
 - **Icons**: Lucide React (or FontAwesome for tactical icons).
 - **State**: Zustand or React Context.
-- **Backend**: Supabase (preferred) or Firebase.
+- **Backend**: Supabase.
+- **Website-Language**: German
 
 ## 2. Coding Principles
 

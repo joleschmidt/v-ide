@@ -50,7 +50,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
-              <Mountain className="h-4 w-4" />
+              <Mountain className="h-4 w-4 text-amber-500" />
               <span className="font-mono text-xs">Wilderness</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
@@ -63,7 +63,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
 
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
-              <Flame className="h-4 w-4" />
+              <Flame className="h-4 w-4 text-red-400" />
               <span className="font-sans text-xs">Fire</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
@@ -73,7 +73,13 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
 
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
-              <Droplet className="h-4 w-4" />
+              <Droplet className={`h-4 w-4 ${
+                sector.waterAvailability === "NONE" 
+                  ? "text-blue-400" 
+                  : sector.waterAvailability === "NATURAL_SOURCE" 
+                  ? "text-[#4a6f4a]" 
+                  : "text-cyan-400"
+              }`} />
               <span className="font-sans text-xs">Water</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
@@ -83,7 +89,7 @@ export const SectorDetail = ({ sector, onBookClick }: SectorDetailProps) => {
 
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[#666666]">
-              <Users className="h-4 w-4" />
+              <Users className="h-4 w-4 text-purple-400" />
               <span className="font-sans text-xs">Capacity</span>
             </div>
             <div className="font-sans text-sm font-semibold text-[#e5e5e5]">
