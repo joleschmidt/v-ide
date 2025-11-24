@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
 import type { Database } from './types';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -14,15 +14,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Create a dummy client if env vars are missing (prevents runtime errors)
-export const supabase = createClient<Database>(
+// Use SSR browser client to ensure cookies are set for server-side auth
+export const supabase = createBrowserClient<Database>(
   supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key',
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-    },
-  }
+  supabaseAnonKey || 'placeholder-key'
 );
 

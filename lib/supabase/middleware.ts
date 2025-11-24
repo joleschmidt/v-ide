@@ -37,7 +37,9 @@ export async function updateSession(request: NextRequest) {
         }
     );
 
-    // Just refresh the session and pass through - let pages handle auth
+    // Refresh the session to ensure cookies are synced
+    await supabase.auth.getSession();
+
     return supabaseResponse;
 }
 

@@ -60,20 +60,22 @@ export function useAuth() {
       }
     }, 3000); // 3 second timeout
 
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
+    // Get initial session - use getUser() to validate with server
+    supabase.auth.getUser().then(({ data: { user }, error }) => {
       if (!mounted) return;
       
       if (error) {
-        console.error("Error getting session:", error);
+        console.error("Error getting user:", error);
+        setUser(null);
+        setProfile(null);
         setLoading(false);
         clearTimeout(timeoutId);
         return;
       }
 
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id).finally(() => {
+      setUser(user);
+      if (user) {
+        fetchProfile(user.id).finally(() => {
           if (mounted) {
             clearTimeout(timeoutId);
           }

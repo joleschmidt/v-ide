@@ -16,8 +16,9 @@ export default function LoginPage() {
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        const redirectTo = redirect ? decodeURIComponent(redirect) : "/command";
-        router.push(redirectTo);
+        const redirectTo = redirect ? decodeURIComponent(redirect) : "/";
+        // Use window.location for hard navigation to ensure cookies are read
+        window.location.href = redirectTo;
       } else {
         setIsChecking(false);
       }
@@ -45,7 +46,7 @@ export default function LoginPage() {
         </div>
 
         <div className="rounded-md border border-[#262626] bg-[#171717] p-6">
-          <LoginForm redirectTo={redirect ? decodeURIComponent(redirect) : "/command"} />
+          <LoginForm redirectTo={redirect ? decodeURIComponent(redirect) : "/"} />
         </div>
 
         <div className="text-center">

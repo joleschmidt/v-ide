@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link"
 import { Flame, Droplet, PackageCheck } from "lucide-react"
 import { Card } from "@/components/ui/card"
+import { SaveButton } from "@/features/sectors/components/save-button"
 
 interface SectorCardProps {
   id: string
@@ -38,8 +41,19 @@ export function SectorCard({
           <span className="text-[#a3a3a3] font-mono text-sm">Level {wildernessLevel}</span>
         </div>
 
-        <div className="absolute top-3 right-3 bg-[#0a0a0a]/80 border border-[#262626] px-3 py-1 rounded">
-          <span className="text-[#a3a3a3] font-mono text-xs">{coordinates}</span>
+        <div className="absolute top-3 right-3 flex items-center gap-2">
+          <div className="bg-[#0a0a0a]/80 border border-[#262626] px-3 py-1 rounded">
+            <span className="text-[#a3a3a3] font-mono text-xs">{coordinates}</span>
+          </div>
+          <div 
+            className="bg-[#0a0a0a]/80 border border-[#262626] rounded"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <SaveButton sectorId={id} variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-[#262626]" />
+          </div>
         </div>
       </div>
 

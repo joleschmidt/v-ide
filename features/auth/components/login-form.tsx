@@ -58,10 +58,21 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
         return;
       }
 
+      // Verify the session was set by calling getUser()
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      
+      if (userError || !user) {
+        setError("Session konnte nicht validiert werden. Bitte versuche es erneut.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Wait a bit for cookies to be set and synced
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
       // Force a hard navigation to ensure cookies are sent to server
-      const targetUrl = redirectTo || "/command";
-      router.refresh();
-      router.push(targetUrl);
+      const targetUrl = redirectTo || "/";
+      window.location.href = targetUrl;
     } catch (err) {
       console.error("Login error:", err);
       setError(err instanceof Error ? err.message : "Ein unerwarteter Fehler ist aufgetreten");

@@ -6,6 +6,7 @@ import { SectorDetail } from "@/features/sectors/components/sector-detail";
 import { SectorImageGallery } from "@/features/sectors/components/sector-image-gallery";
 import { SectorLocationCard } from "@/features/sectors/components/sector-location-card";
 import { BackButton } from "@/features/sectors/components/back-button";
+import { SaveButton } from "@/features/sectors/components/save-button";
 import { Button } from "@/components/ui/button";
 
 // Mock data fallback for development
@@ -159,11 +160,14 @@ export default async function SectorDetailPage({ params }: SectorDetailPageProps
               {/* Booking CTA Card */}
               <div className="rounded-md border border-[#262626] bg-[#171717] p-6">
                 <div className="mb-4 space-y-2">
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-sans text-3xl font-semibold text-[#4a6f4a]">
-                      €{sector.pricePerNight}
-                    </span>
-                    <span className="font-sans text-sm text-[#a3a3a3]">per night</span>
+                  <div className="flex items-baseline justify-between">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-sans text-3xl font-semibold text-[#4a6f4a]">
+                        €{sector.pricePerNight}
+                      </span>
+                      <span className="font-sans text-sm text-[#a3a3a3]">per night</span>
+                    </div>
+                    <SaveButton sectorId={sector.id} />
                   </div>
                   <p className="font-sans text-xs text-[#666666]">
                     One-night stay only

@@ -13,8 +13,11 @@ export default function CommandPage() {
 
   useEffect(() => {
     async function loadData() {
+      // Wait a bit for auth state to sync
+      await new Promise(resolve => setTimeout(resolve, 200));
+
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session?.user) {
         router.push("/login?redirect=/command");
         return;
@@ -22,14 +25,28 @@ export default function CommandPage() {
 
       setUser(session.user);
 
-      // Load profile for display name
-      const { data: profile } = await supabase
+      // Load profile to check role
+      const { data: profileData, error } = await supabase
         .from("users")
-        .select("display_name")
+        .select("display_name, role")
         .eq("id", session.user.id)
         .single();
 
-      setDisplayName(profile?.display_name || session.user.email || "Operator");
+      if (error || !profileData) {
+        console.error("Error loading profile:", error);
+        router.push("/profile");
+        return;
+      }
+
+      const profile = profileData as { display_name: string; role: string };
+
+      // Only allow LANDOWNER or BOTH roles
+      if (profile.role !== "LANDOWNER" && profile.role !== "BOTH") {
+        router.push("/profile");
+        return;
+      }
+
+      setDisplayName(profile.display_name || session.user.email || "Operator");
       setLoading(false);
     }
 
