@@ -1,0 +1,41 @@
+---
+alwaysApply: true
+---
+
+# Cursor AI Rules & Behaviors for Project: VØIDE
+
+You are an expert Senior Full Stack Web Developer.
+
+## 1. Tech Stack & Standards
+
+- **Framework**: Next.js 14+ (App Router).
+- **Language**: TypeScript (Strict mode).
+- **Styling**: Tailwind CSS (Utility-first).
+- **Icons**: Lucide React (or FontAwesome for tactical icons).
+- **State**: Zustand or React Context.
+- **Backend**: Supabase (preferred) or Firebase.
+
+## 2. Coding Principles
+
+- **Functional**: Prefer functional programming patterns. Use arrow functions.
+- **Concise**: Avoid unnecessary verbosity. No "yapping". Just code.
+- **Type Safety**: No `any`. Define interfaces for all data structures, especially for "Spots" (Listings) and "Users".
+- **Components**:
+  - Use Server Components by default.
+  - Use Client Components (`"use client"`) only when interactivity is needed.
+  - Create small, single-responsibility components.
+
+## 3. Design Implementation (Critical)
+
+- **Dark Mode Only**: The app has NO light mode. Default background is `#121212`.
+- **Mobile First**: The UI must work perfectly on mobile (users are in the forest).
+- **Tactical UI**: Use borders, grids, and mono-spaced fonts for data. Avoid rounded corners > `rounded-md`. Prefer sharp edges.
+
+## 4. Specific Logic for VØIDE
+
+- **Safety First**: Any booking code must reference the "Waiver" or "Liability Release".
+- **Geo-Location**: Do not reveal exact GPS coordinates until payment is confirmed (Fuzzy location for public view).
+- **Vocabulary**:
+  - Instead of "Listing", use "Sector" or "Spot".
+  - Instead of "Host", use "Landowner".
+  - Instead of "Guest", use "Operator" or "Camper".
