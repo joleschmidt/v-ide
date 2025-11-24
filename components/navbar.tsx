@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { TACTICAL_COPY } from "@/lib/constants";
-import { LogIn, Map, User, LogOut } from "lucide-react";
+import { LogIn, Map, User, LogOut, Mountain } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/features/auth/hooks/use-auth";
@@ -35,7 +35,17 @@ export function Navbar() {
                 }`}
             >
               <Map className="mr-2 inline h-4 w-4" />
-              Gebietssuche
+              Karte
+            </Link>
+            <Link
+              href="/gebiete"
+              className={`font-sans text-sm transition-colors ${isActive("/gebiete")
+                ? "text-[#4a6f4a]"
+                : "text-[#a3a3a3] hover:text-[#e5e5e5]"
+                }`}
+            >
+              <Mountain className="mr-2 inline h-4 w-4" />
+              Gebiete
             </Link>
           </div>
         </div>

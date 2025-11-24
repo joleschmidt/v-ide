@@ -6,26 +6,26 @@ export const TACTICAL_COPY = {
   LOGIN: "Systemzugang",
   LOGOUT: "Trennen",
   REGISTER: "Operator registrieren",
-  
+
   // Map
-  MAP_TITLE: "Gebietssuche",
+  MAP_TITLE: "Karte",
   LOADING_SECTORS: "Gebiete scannen...",
   NO_SECTORS: "Keine aktiven Gebiete",
-  
+
   // Booking
   BOOK_NOW: "Buchen",
   CONFIRM_BOOKING: "Buchung bestätigen",
   BOOKING_SUCCESS: "Gebiet reserviert",
-  
+
   // Waiver
   SIGN_WAIVER: "Bedingungen akzeptieren",
   WAIVER_REQUIRED: "Rechtliche Vereinbarung erforderlich",
-  
+
   // Dashboard
   COMMAND_CENTER: "Kommandostelle",
   SECTOR_VERIFIED: "Gebiet verifiziert",
   COORDINATES_CONFIRMED: "Koordinaten bestätigt",
-  
+
   // Status
   ACTIVE: "Aktiv",
   INACTIVE: "Offline",
@@ -63,7 +63,7 @@ export const MAP_CONFIG = {
   MIN_ZOOM: 6,
   MAX_ZOOM: 18,
   FUZZY_RADIUS_KM: 2,
-  
+
   // Google Maps Style (Dark Mode)
   DARK_STYLE_ID: "dark", // We'll need to create custom style
 } as const;

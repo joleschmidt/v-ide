@@ -33,6 +33,7 @@ export function transformSectorRow(row: SectorRow): Sector {
     isActive: row.is_active,
     blockedDates: row.blocked_dates || [],
     pricePerNight: Number(row.price_per_night),
+    region: row.region || undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -57,6 +58,8 @@ export function transformSectorPreview(row: SectorRow): SectorPreview {
       },
       radiusKm: Number(row.fuzzy_radius_km),
     },
+    region: row.region || undefined,
+    hasToilet: row.has_toilet,
   };
 }
 

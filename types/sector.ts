@@ -33,6 +33,7 @@ export interface Sector {
   // Location
   exactLocation: Coordinates;     // Only visible after booking
   fuzzyLocation: FuzzyLocation;   // Public view
+  region?: string;                // Region ID (e.g. "schwarzwald")
   
   // Characteristics
   wildernessLevel: WildernessLevel;
@@ -65,5 +66,7 @@ export interface SectorPreview {
   pricePerNight: number;
   imageUrl: string;
   fuzzyLocation: FuzzyLocation;
+  region?: string;
+  hasToilet?: boolean;
 }
 
