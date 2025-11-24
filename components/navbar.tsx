@@ -2,12 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { TACTICAL_COPY } from "@/lib/constants";
-import { LogIn, Map, User } from "lucide-react";
+import { LogIn, Map, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 
 export function Navbar() {
   const pathname = usePathname();
+  const { user, profile, signOut, loading } = useAuth();
 
   const isActive = (path: string) => pathname === path;
 
@@ -39,27 +41,57 @@ export function Navbar() {
 
         {/* Auth Actions */}
         <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
-          >
-            <Link href="/login">
-              <LogIn className="mr-2 h-4 w-4" />
-              {TACTICAL_COPY.LOGIN}
-            </Link>
-          </Button>
-          <Button
-            size="sm"
-            asChild
-            className="bg-[#2d4a2d] font-sans text-xs hover:bg-[#3d5a3d]"
-          >
-            <Link href="/register">
-              <User className="mr-2 h-4 w-4" />
-              Register
-            </Link>
-          </Button>
+          {loading ? (
+            <div className="h-8 w-8 animate-pulse rounded-md bg-[#262626]" />
+          ) : user ? (
+            <>
+              {profile?.role === "LANDOWNER" || profile?.role === "BOTH" ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
+                >
+                  <Link href="/command">
+                    Command Center
+                  </Link>
+                </Button>
+              ) : null}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={signOut}
+                className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                {TACTICAL_COPY.LOGOUT}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
+              >
+                <Link href="/login">
+                  <LogIn className="mr-2 h-4 w-4" />
+                  {TACTICAL_COPY.LOGIN}
+                </Link>
+              </Button>
+              <Button
+                size="sm"
+                asChild
+                className="bg-[#2d4a2d] font-sans text-xs hover:bg-[#3d5a3d]"
+              >
+                <Link href="/register">
+                  <User className="mr-2 h-4 w-4" />
+                  Register
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </nav>

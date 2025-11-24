@@ -16,6 +16,7 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <SectorCard
+            id="1"
             title="Gebiet Alpha"
             image="/dark-dense-forest-wilderness-tactical.jpg"
             wildernessLevel={5}
@@ -25,6 +26,7 @@ export default function Home() {
             byot={true}
           />
           <SectorCard
+            id="2"
             title="Gebiet Bravo"
             image="/pine-forest-clearing-mountains-tactical.jpg"
             wildernessLevel={3}
@@ -34,6 +36,7 @@ export default function Home() {
             byot={true}
           />
           <SectorCard
+            id="3"
             title="Gebiet Charlie"
             image="/remote-wilderness-canyon-survival-tactical.jpg"
             wildernessLevel={5}

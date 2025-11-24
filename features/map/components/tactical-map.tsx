@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import { GoogleMap, useJsApiLoader, Marker, Circle } from "@react-google-maps/api";
 import type { SectorPreview } from "@/types/sector";
 import { MAP_CONFIG } from "@/lib/constants";
@@ -68,6 +69,7 @@ const darkMapStyles = [
 ];
 
 export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
+  const router = useRouter();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
@@ -100,7 +102,11 @@ export const TacticalMap = ({ sectors, onSectorClick }: TacticalMapProps) => {
   };
 
   const handleMarkerClick = (sectorId: string) => {
-    onSectorClick?.(sectorId);
+    if (onSectorClick) {
+      onSectorClick(sectorId);
+    } else {
+      router.push(`/sectors/${sectorId}`);
+    }
   };
 
   if (!isLoaded) {

@@ -1,0 +1,47 @@
+import { RegisterForm } from "@/features/auth/components/register-form";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
+export default async function RegisterPage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/command");
+  }
+
+  return (
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-[#121212] px-4">
+      <div className="w-full max-w-md space-y-8">
+        <div className="text-center">
+          <h1 className="font-sans text-3xl font-semibold text-[#e5e5e5]">
+            Register Operator
+          </h1>
+          <p className="mt-2 font-sans text-sm text-[#a3a3a3]">
+            Create your account to access sectors
+          </p>
+        </div>
+
+        <div className="rounded-md border border-[#262626] bg-[#171717] p-6">
+          <RegisterForm />
+        </div>
+
+        <div className="text-center">
+          <p className="font-sans text-sm text-[#a3a3a3]">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="font-sans text-sm text-[#4a6f4a] hover:text-[#5a8a5a]"
+            >
+              Access System
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+

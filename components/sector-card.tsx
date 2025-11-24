@@ -1,7 +1,9 @@
+import Link from "next/link"
 import { Flame, Droplet, PackageCheck } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
 interface SectorCardProps {
+  id: string
   title: string
   image: string
   wildernessLevel: number
@@ -12,6 +14,7 @@ interface SectorCardProps {
 }
 
 export function SectorCard({
+  id,
   title,
   image,
   wildernessLevel,
@@ -21,7 +24,8 @@ export function SectorCard({
   byot = false,
 }: SectorCardProps) {
   return (
-    <Card className="bg-[#171717] border-[#262626] rounded overflow-hidden hover:border-[#3d5a3d] transition-all group">
+    <Link href={`/sectors/${id}`} className="block">
+      <Card className="bg-[#171717] border-[#262626] rounded overflow-hidden hover:border-[#3d5a3d] transition-all group cursor-pointer">
       <div className="relative h-64 overflow-hidden">
         <img
           src={image || "/placeholder.svg"}
@@ -79,5 +83,6 @@ export function SectorCard({
         )}
       </div>
     </Card>
+    </Link>
   )
 }

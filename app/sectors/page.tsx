@@ -53,10 +53,7 @@ export default function SectorsPage() {
 
       {/* Map */}
       <main className="flex-1">
-        <TacticalMap 
-          sectors={mockSectors}
-          onSectorClick={(id) => console.log("Sector clicked:", id)}
-        />
+        <TacticalMap sectors={mockSectors} />
       </main>
     </div>
   );
