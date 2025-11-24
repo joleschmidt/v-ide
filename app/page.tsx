@@ -45,7 +45,7 @@ export default async function Home() {
         <h2 className="text-2xl font-bold tracking-wide text-[#e5e5e5] mb-8 border-l-2 border-[#3d5a3d] pl-4">
           Verfügbare Gebiete
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {sectors.length > 0 ? (
             sectors.map((sector) => {
               const features: string[] = []

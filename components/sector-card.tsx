@@ -24,9 +24,9 @@ export function SectorCard({
   byot = false,
 }: SectorCardProps) {
   return (
-    <Link href={`/sectors/${id}`} className="block">
-      <Card className="bg-[#171717] border-[#262626] rounded overflow-hidden hover:border-[#3d5a3d] transition-all group cursor-pointer">
-      <div className="relative h-64 overflow-hidden">
+    <Link href={`/sectors/${id}`} className="block h-full">
+      <Card className="bg-[#171717] border-[#262626] rounded overflow-hidden hover:border-[#3d5a3d] transition-all group cursor-pointer h-full flex flex-col p-0 gap-0">
+      <div className="relative h-64 overflow-hidden flex-shrink-0">
         <img
           src={image || "/placeholder.svg"}
           alt={title}
@@ -43,7 +43,7 @@ export function SectorCard({
         </div>
       </div>
 
-      <div className="p-4 space-y-3">
+      <div className="p-4 flex flex-col flex-1 space-y-3">
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-semibold tracking-wide text-[#e5e5e5]">{title}</h3>
           <div className="text-right">
@@ -52,7 +52,7 @@ export function SectorCard({
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 min-h-[24px]">
           {features.includes("Kein Feuer") && (
             <div className="flex items-center gap-1 text-xs text-[#737373] border border-[#262626] px-2 py-1 rounded">
               <Flame className="w-3 h-3 text-red-400" />
@@ -73,14 +73,16 @@ export function SectorCard({
           )}
         </div>
 
-        {byot && (
-          <div className="pt-2 border-t border-[#262626]">
-            <div className="flex items-center gap-2 text-[#737373]">
-              <PackageCheck className="w-4 h-4" />
-              <span className="text-xs font-medium tracking-wide font-mono">Eigene Ausrüstung erforderlich</span>
+        <div className="mt-auto">
+          {byot && (
+            <div className="pt-2 border-t border-[#262626]">
+              <div className="flex items-center gap-2 text-[#737373]">
+                <PackageCheck className="w-4 h-4" />
+                <span className="text-xs font-medium tracking-wide font-mono">Eigene Ausrüstung erforderlich</span>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </Card>
     </Link>
