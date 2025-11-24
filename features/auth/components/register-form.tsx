@@ -50,13 +50,26 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
     setError(null);
     try {
       // Sign up with Supabase Auth
+      // Store metadata so the trigger can use it
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
+        options: {
+          data: {
+            display_name: data.displayName,
+            displayName: data.displayName, // Also store as camelCase for compatibility
+            role: data.role,
+          },
+        },
       });
 
       if (authError) {
-        setError(authError.message);
+        // Handle rate limiting and other auth errors
+        if (authError.message.includes("rate limit") || authError.message.includes("48 seconds")) {
+          setError("Zu viele Anfragen. Bitte warte einen Moment und versuche es erneut.");
+        } else {
+          setError(authError.message);
+        }
         return;
       }
 
@@ -65,7 +78,7 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
         return;
       }
 
-      // Create user profile
+      // Create user profile (trigger may have already created it)
       const { error: profileError } = await supabase.from("users").insert({
         id: authData.user.id,
         email: data.email,
@@ -74,8 +87,17 @@ export const RegisterForm = ({ redirectTo }: RegisterFormProps) => {
       });
 
       if (profileError) {
-        setError(profileError.message);
-        return;
+        // Handle RLS and other database errors
+        if (profileError.message.includes("row-level security")) {
+          setError("Registrierung fehlgeschlagen. Bitte kontaktiere den Support.");
+        } else if (profileError.code === "23505") {
+          // Unique constraint violation - profile already exists (created by trigger)
+          // This is fine, the trigger already created the profile
+          console.log("Profile already exists, continuing...");
+        } else {
+          setError(profileError.message);
+          return;
+        }
       }
 
       router.push(redirectTo || "/command");

@@ -1,20 +1,35 @@
+"use client";
+
 import { LoginForm } from "@/features/auth/components/login-form";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { supabase } from "@/lib/supabase/client";
 import Link from "next/link";
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: { redirect?: string };
-}) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function LoginPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isChecking, setIsChecking] = useState(true);
+  const redirect = searchParams.get("redirect");
 
-  if (user) {
-    redirect(searchParams.redirect || "/command");
+  useEffect(() => {
+    // Check if user is already logged in
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        const redirectTo = redirect ? decodeURIComponent(redirect) : "/command";
+        router.push(redirectTo);
+      } else {
+        setIsChecking(false);
+      }
+    });
+  }, [router, redirect]);
+
+  if (isChecking) {
+    return (
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-[#121212]">
+        <div className="h-8 w-8 animate-pulse rounded-md bg-[#262626]" />
+      </div>
+    );
   }
 
   return (
@@ -30,7 +45,7 @@ export default async function LoginPage({
         </div>
 
         <div className="rounded-md border border-[#262626] bg-[#171717] p-6">
-          <LoginForm redirectTo={searchParams.redirect || "/command"} />
+          <LoginForm redirectTo={redirect ? decodeURIComponent(redirect) : "/command"} />
         </div>
 
         <div className="text-center">
@@ -48,4 +63,3 @@ export default async function LoginPage({
     </div>
   );
 }
-

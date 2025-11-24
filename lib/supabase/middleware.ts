@@ -37,26 +37,7 @@ export async function updateSession(request: NextRequest) {
         }
     );
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    // Protect dashboard routes
-    if (request.nextUrl.pathname.startsWith('/command') && !user) {
-        const url = request.nextUrl.clone();
-        url.pathname = '/login';
-        url.searchParams.set('redirect', request.nextUrl.pathname);
-        return NextResponse.redirect(url);
-    }
-
-    // Protect booking routes
-    if (request.nextUrl.pathname.startsWith('/booking') && !user) {
-        const url = request.nextUrl.clone();
-        url.pathname = '/login';
-        url.searchParams.set('redirect', request.nextUrl.pathname);
-        return NextResponse.redirect(url);
-    }
-
+    // Just refresh the session and pass through - let pages handle auth
     return supabaseResponse;
 }
 

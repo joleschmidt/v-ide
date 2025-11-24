@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { TACTICAL_COPY } from "@/lib/constants";
 import { LogIn, Map, User, LogOut } from "lucide-react";
 import Link from "next/link";
@@ -60,6 +61,32 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="sm"
+                asChild
+                className={`font-sans text-xs hover:bg-[#262626] ${isActive("/profile")
+                  ? "text-[#4a6f4a]"
+                  : "text-[#a3a3a3] hover:text-[#e5e5e5]"
+                  }`}
+              >
+                <Link href="/profile" className="flex items-center gap-2">
+                  <Avatar className="h-6 w-6 border border-[#262626]">
+                    <AvatarImage src={profile?.avatarUrl || undefined} alt={profile?.displayName || ""} />
+                    <AvatarFallback className="bg-[#2d4a2d] text-[#e5e5e5] font-mono text-xs">
+                      {profile?.displayName
+                        ? profile.displayName
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase()
+                          .slice(0, 2)
+                        : "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hidden md:inline">Profil</span>
+                </Link>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={signOut}
                 className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
               >
@@ -69,27 +96,20 @@ export function Navbar() {
             </>
           ) : (
             <>
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className="font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626]"
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center gap-1.5 h-8 rounded-md px-3 font-sans text-xs text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-[#262626] transition-colors"
               >
-                <Link href="/login">
-                  <LogIn className="mr-2 h-4 w-4" />
-                  {TACTICAL_COPY.LOGIN}
-                </Link>
-              </Button>
-              <Button
-                size="sm"
-                asChild
-                className="bg-[#2d4a2d] font-sans text-xs hover:bg-[#3d5a3d]"
+                <LogIn className="h-4 w-4" />
+                {TACTICAL_COPY.LOGIN}
+              </Link>
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center gap-1.5 h-8 rounded-md px-3 bg-[#2d4a2d] font-sans text-xs text-[#e5e5e5] hover:bg-[#3d5a3d] transition-colors"
               >
-                <Link href="/register">
-                  <User className="mr-2 h-4 w-4" />
-                  Registrieren
-                </Link>
-              </Button>
+                <User className="h-4 w-4" />
+                Registrieren
+              </Link>
             </>
           )}
         </div>

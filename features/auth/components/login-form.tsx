@@ -45,6 +45,7 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
   const handleSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setError(null);
+    
     try {
       const { error: authError } = await supabase.auth.signInWithPassword({
         email: data.email,
@@ -53,14 +54,17 @@ export const LoginForm = ({ redirectTo }: LoginFormProps) => {
 
       if (authError) {
         setError(authError.message);
+        setIsLoading(false);
         return;
       }
 
-      router.push(redirectTo || "/command");
+      // Force a hard navigation to ensure cookies are sent to server
+      const targetUrl = redirectTo || "/command";
       router.refresh();
+      router.push(targetUrl);
     } catch (err) {
-      setError("Ein unerwarteter Fehler ist aufgetreten");
-    } finally {
+      console.error("Login error:", err);
+      setError(err instanceof Error ? err.message : "Ein unerwarteter Fehler ist aufgetreten");
       setIsLoading(false);
     }
   };
