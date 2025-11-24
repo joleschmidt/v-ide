@@ -39,28 +39,36 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Night Forest Color Palette */
+/* Updated to blacks, grays, white, and greens only - removed all blue tones */
 .dark {
-  --background: #121212; /* Radar Black */
-  --foreground: #e2e8f0; /* Bone White */
-  --card: #1a1a1a; /* Charcoal */
-  --card-foreground: #e2e8f0;
-  --popover: #1a1a1a;
-  --popover-foreground: #e2e8f0;
-  --primary: #4a7a4a; /* Forest Green */
-  --primary-foreground: #e2e8f0;
-  --secondary: #2a2a2a; /* Grid Lines */
-  --secondary-foreground: #a8a8a8; /* Light Gray */
-  --muted: #1a1a1a;
-  --muted-foreground: #666666; /* Muted Gray */
-  --accent: #5a8a5a; /* Moss Green */
-  --accent-foreground: #e2e8f0;
+  --background: #0a0a0a;
+  /* Deep black */
+  --foreground: #e5e5e5;
+  /* Light gray white */
+  --card: #171717;
+  /* Charcoal */
+  --card-foreground: #e5e5e5;
+  --popover: #171717;
+  --popover-foreground: #e5e5e5;
+  --primary: #2d4a2d;
+  /* Dark forest green */
+  --primary-foreground: #f5f5f5;
+  --secondary: #262626;
+  /* Dark gray */
+  --secondary-foreground: #e5e5e5;
+  --muted: #171717;
+  --muted-foreground: #737373;
+  /* Medium gray */
+  --accent: #3d5a3d;
+  /* Moss green accent */
+  --accent-foreground: #f5f5f5;
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: #2a2a2a; /* Grid Lines */
-  --input: #1a1a1a;
-  --ring: #4a7a4a; /* Forest Green */
-  --success: #4a7a4a; /* Forest Green */
+  --border: #262626;
+  --input: #171717;
+  --ring: #3d5a3d;
+  --success: #4a6f4a;
+  /* Medium green */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -121,6 +129,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
