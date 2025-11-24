@@ -18,10 +18,10 @@ export default async function RegisterPage() {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <h1 className="font-sans text-3xl font-semibold text-[#e5e5e5]">
-            Operator registrieren
+            Konto erstellen
           </h1>
           <p className="mt-2 font-sans text-sm text-[#a3a3a3]">
-            Erstelle dein Konto, um auf Gebiete zuzugreifen
+            Wähle deinen Kontotyp und erstelle dein Konto
           </p>
         </div>
 
